@@ -1,0 +1,5 @@
+name: PowerAntiRelog
+version: '${project.version}'
+main: me.katze.powerantirelog.AntiRelog
+api-version: '1.16'
+authors: [katze225]
