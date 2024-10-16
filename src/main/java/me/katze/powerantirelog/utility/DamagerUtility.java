@@ -15,6 +15,11 @@ public class DamagerUtility {
         } else if (damager instanceof TNTPrimed) {
             TNTPrimed tntPrimed = (TNTPrimed) damager;
             return getDamager(tntPrimed.getSource());
+        } else if (damager instanceof AreaEffectCloud) {
+            AreaEffectCloud aec = (AreaEffectCloud) damager;
+            if (aec.getSource() instanceof Player) {
+                return (Player) aec.getSource();
+            }
         }
         return null;
     }

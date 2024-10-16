@@ -24,32 +24,29 @@ public class PvPManager {
 
     public PvPManager() {
         this.pvpMap = new HashMap<>();
+        startTask();
     }
 
-    public static void addPlayers(Player player1, Player player2) {
-        String name1 = player1.getName();
-        String name2 = player2.getName();
+    public static void addPlayer(Player player) {
+        String name = player.getName();
         int time = AntiRelog.getInstance().getConfig().getInt("settings.time");
 
-        if (player1.hasPermission("powerantirelog.bypass")) return;
-        if (player2.hasPermission("powerantirelog.bypass")) return;
+        if (player.hasPermission("powerantirelog.bypass")) return;
 
-        player1.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
-        player2.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
-
-        disable(player1, player2);
-
-        if (AntiRelog.getInstance().getConfig().getBoolean("settings.close.inventory")) {
-            player1.closeInventory();
-            player2.closeInventory();
+        for (String world : AntiRelog.getInstance().getConfig().getStringList("settings.disabled-worlds")) {
+            if (player.getWorld().getName() == world) {
+                return;
+            }
         }
 
-        if (pvpMap.containsKey(name1) || pvpMap.containsKey(name2)) {
-            pvpMap.replace(name1, pvpMap.get(name1), time);
-            pvpMap.replace(name2, pvpMap.get(name2), time);
+        player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
+
+        disable(player);
+
+        if (pvpMap.containsKey(name)) {
+            pvpMap.replace(name, pvpMap.get(name), time);
         } else {
-            pvpMap.put(name1, time);
-            pvpMap.put(name2, time);
+            pvpMap.put(name, time);
         }
     }
 
@@ -63,73 +60,57 @@ public class PvPManager {
     }
 
     public static void leave(Player player) {
-        if (AntiRelog.getInstance().getConfig().getBoolean("settings.leave.enabled")) return;
-
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.leave.kill")) {
             player.damage(player.getHealth());
         }
 
-        if (AntiRelog.getInstance().getConfig().getStringList("settings.leave.message") != null) {
-            for (String string : AntiRelog.getInstance().getConfig().getStringList("settings.leave.message")) {
-                String replacedString = ColorUtility.getMsg(string).replace("{player}", player.getName());
-                Bukkit.getServer().broadcastMessage(replacedString);
-            }
+        for (String string : AntiRelog.getInstance().getConfig().getStringList("settings.leave.message")) {
+            String replacedString = ColorUtility.getMsg(string).replace("{player}", player.getName());
+            Bukkit.getServer().broadcastMessage(replacedString);
         }
+
 
         pvpMap.remove(player.getName());
     }
 
-    private static void disable(Player player1, Player player2) {
+    private static void disable(Player player) {
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.fly")) {
-            if (player1.isFlying()) player1.setFlying(false);
-            if (player2.isFlying()) player2.setFlying(false);
+            if (player.isFlying()) player.setFlying(false);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.speed")) {
-            if (player1.getWalkSpeed() != 0.2F) player1.setWalkSpeed(0.2F);
-            if (player2.getWalkSpeed() != 0.2F) player2.setWalkSpeed(0.2F);
+            if (player.getWalkSpeed() != 0.2F) player.setWalkSpeed(0.2F);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.gamemode")) {
-            if (player1.getGameMode() != GameMode.SURVIVAL) player1.setGameMode(GameMode.SURVIVAL);
-            if (player2.getGameMode() != GameMode.SURVIVAL) player2.setGameMode(GameMode.SURVIVAL);
+            if (player.getGameMode() != GameMode.SURVIVAL) player.setGameMode(GameMode.SURVIVAL);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.invisibility")) {
-            if (player1.getActivePotionEffects().contains(PotionEffectType.INVISIBILITY)) player1.removePotionEffect(PotionEffectType.INVISIBILITY);
-            if (player2.getActivePotionEffects().contains(PotionEffectType.INVISIBILITY)) player2.removePotionEffect(PotionEffectType.INVISIBILITY);
+            if (player.getActivePotionEffects().contains(PotionEffectType.INVISIBILITY)) player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.elytra")) {
-            if (player1.getInventory().getChestplate().getType() != Material.ELYTRA) {
-                ItemStack itemStack = player1.getInventory().getChestplate();
-                player1.getInventory().getChestplate().setType(null);
-                player1.getInventory().addItem(itemStack);
-            }
-
-            if (player2.getInventory().getChestplate().getType() != Material.ELYTRA) {
-                ItemStack itemStack = player2.getInventory().getChestplate();
-                player2.getInventory().getChestplate().setType(null);
-                player2.getInventory().addItem(itemStack);
+            if (player.getInventory().getChestplate().getType() != Material.ELYTRA) {
+                ItemStack itemStack = player.getInventory().getChestplate();
+                player.getInventory().getChestplate().setType(null);
+                player.getInventory().addItem(itemStack);
             }
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.godmode")) {
             if (AntiRelog.CMI_HOOK == true) {
-                CMIUser user1 = CMI.getInstance().getPlayerManager().getUser(player1);
-                CMIUser user2 = CMI.getInstance().getPlayerManager().getUser(player2);
+                CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
-                if (user1.isGod()) user1.setTgod(0);
-                if (user2.isGod()) user2.setTgod(0);
+                if (user.isGod()) user.setTgod(0);
             }
             if (AntiRelog.ESSENTIALS_HOOK == true) {
                 Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 
-                User user1 = essentials.getUser(player1);
-                User user2 = essentials.getUser(player2);
+                User user = essentials.getUser(player);
 
-                if (user1.isGodModeEnabled()) user1.setGodModeEnabled(false);
-                if (user2.isGodModeEnabled()) user2.setGodModeEnabled(false);
+                if (user.isGodModeEnabled()) user.setGodModeEnabled(false);
+                if (user.isGodModeEnabled()) user.setGodModeEnabled(false);
             }
         }
     }

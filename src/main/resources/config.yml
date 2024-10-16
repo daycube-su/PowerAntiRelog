@@ -11,13 +11,20 @@ settings:
     style: SOLID
 
   leave:
-    enabled: true
     kill: true
-    # null or [] for disabled this
+    # null или [] чтобы отключить
     message:
       - "&r"
       - "&fИгрок §x§0§0§A§4§F§B{player}, &fпокинул сервер во время PvP!"
       - "&r"
+    # Игрока будет убивать за выход с сервера, если leave.kill включен.
+    # Но если игрока кикнет его убьет только в случае данных причин.
+    # Если игрок просто выйдет, его убьет, не зависимо от причин
+    kill-reasons:
+      - "АнтиЧит"
+      - "anticheat"
+      - "Читер"
+      - "Подозрения в использовании"
 
   disable:
     fly: true
@@ -29,9 +36,23 @@ settings:
 
   cancel:
     interact: true
+    command: true
+    teleport: true
+    chorus: false
+    ender-pearl: false
+    ender-chest: true
 
-  close:
-    inventory: true
+  # Работает только если cancel.command ровно true
+  command-whitelist:
+    - "msg"
+    - "m"
+    - "tell"
+    - "pm"
+
+  disabled-worlds:
+    - "duels"
+    - "duel"
+    - "exampleWorld"
 
 messages:
   start: "§x§E§3§2§6§3§6&l| &fВы начали PvP!"

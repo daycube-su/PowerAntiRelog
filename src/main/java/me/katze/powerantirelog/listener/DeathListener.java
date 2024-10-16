@@ -13,9 +13,10 @@ public class DeathListener implements Listener {
         if (e.getEntity() instanceof Player) {
             Player player = e.getEntity().getPlayer();
 
-            if (PvPManager.isPvP(player)) {
-                PvPManager.death(player);
-            }
+            if (!PvPManager.isPvP(player)) return;
+
+            PvPManager.death(player);
+
         }
     }
 }

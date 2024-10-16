@@ -1,9 +1,6 @@
 package me.katze.powerantirelog;
 
-import me.katze.powerantirelog.listener.DamageListener;
-import me.katze.powerantirelog.listener.DeathListener;
-import me.katze.powerantirelog.listener.LeaveListener;
-import me.katze.powerantirelog.listener.WorldGuardListener;
+import me.katze.powerantirelog.listener.*;
 import me.katze.powerantirelog.manager.PvPManager;
 import me.katze.powerantirelog.utility.Metrics;
 import org.bukkit.Bukkit;
@@ -39,8 +36,6 @@ public final class AntiRelog extends JavaPlugin {
         loadListeners();
         loadCommands();
 
-        PvPManager.startTask();
-
         pvpmanager = new PvPManager();
     }
 
@@ -54,6 +49,8 @@ public final class AntiRelog extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new LeaveListener(), this);
+        Bukkit.getPluginManager().registerEvents(new TeleportListener(), this);
+        Bukkit.getPluginManager().registerEvents(new InteractListener(), this);
     }
 
     private void loadConfig() {

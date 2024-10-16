@@ -4,13 +4,16 @@ import me.katze.powerantirelog.AntiRelog;
 import me.katze.powerantirelog.manager.PvPManager;
 import me.katze.powerantirelog.utility.DamagerUtility;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class DamageListener implements Listener {
 
@@ -24,14 +27,9 @@ public class DamageListener implements Listener {
         Player damager = DamagerUtility.getDamager(e.getDamager());
 
         if (damager == null) return;
-        PvPManager.addPlayers(target, damager);
-    }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onInteractWithEntity(PlayerInteractEntityEvent e) {
-        if (AntiRelog.getInstance().getConfig().getBoolean("settings.cancel.interact") && PvPManager.isPvP(e.getPlayer())) {
-            e.setCancelled(true);
-        }
+        PvPManager.addPlayer(target);
+        PvPManager.addPlayer(damager);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -42,6 +40,25 @@ public class DamageListener implements Listener {
         Player damager = DamagerUtility.getDamager(e.getCombuster());
 
         if (damager == null) return;
-        PvPManager.addPlayers(target, damager);
+
+        PvPManager.addPlayer(target);
+        PvPManager.addPlayer(damager);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPotionSplash(PotionSplashEvent e) {
+        if (e.getPotion() != null && e.getPotion().getShooter() instanceof Player) {
+            Player player1 = (Player) e.getPotion().getShooter();
+            for (LivingEntity player2 : e.getAffectedEntities()) {
+                if (player2.getType() == EntityType.PLAYER && player2 != player1) {
+                    for (PotionEffect effect : e.getPotion().getEffects()) {
+                        if (effect.getType().equals(PotionEffectType.POISON)) {
+                            PvPManager.addPlayer(player1);
+                            PvPManager.addPlayer((Player) player2);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
