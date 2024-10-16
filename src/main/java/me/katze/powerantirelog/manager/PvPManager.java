@@ -39,13 +39,12 @@ public class PvPManager {
             }
         }
 
-        player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
-
-        disable(player);
-
         if (pvpMap.containsKey(name)) {
             pvpMap.replace(name, pvpMap.get(name), time);
         } else {
+            player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
+
+            disable(player);
             pvpMap.put(name, time);
         }
     }

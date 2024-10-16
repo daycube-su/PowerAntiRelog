@@ -30,7 +30,7 @@ public class CommandListener implements Listener {
 
     private static boolean isWhitelistCommand(String command) {
         for (String string : AntiRelog.getInstance().getConfig().getStringList("settings.command-whitelist")) {
-            if (string == command) {
+            if (string.contains(command)) {
                 return true;
             }
         }

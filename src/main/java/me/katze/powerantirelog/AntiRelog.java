@@ -51,6 +51,7 @@ public final class AntiRelog extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LeaveListener(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportListener(), this);
         Bukkit.getPluginManager().registerEvents(new InteractListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
     }
 
     private void loadConfig() {
