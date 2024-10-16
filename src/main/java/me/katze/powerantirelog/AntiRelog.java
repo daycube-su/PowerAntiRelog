@@ -1,17 +1,20 @@
 package me.katze.powerantirelog;
 
+import me.katze.powerantirelog.listener.DamageListener;
+import me.katze.powerantirelog.listener.WorldGuardListener;
 import me.katze.powerantirelog.utility.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
 public final class AntiRelog extends JavaPlugin {
-    private static final String LOGO = "/*" +
-            "\n█▄▀ ▄▀█ ▀█▀ ▀█ █▀▀ ▄▄ ▄▀█ █▄░█ ▀█▀ █ █▄▄ █▀█ ▀█▀"
-            + "\n█░█ █▀█ ░█░ █▄ ██▄ ░░ █▀█ █░▀█ ░█░ █ █▄█ █▄█ ░█░"
-            + "\nhttps://discord.gg/6wGy3sYxzw"
-            + "\n*/";
+
+    public static boolean CMI_HOOK = false;
+    public static boolean ESSENTIALS_HOOK = false;
+    public static boolean WORLDGUARD_HOOK = false;
+
     private static final int PLUGIN_ID = 23642;
     public static final String VERSION = "0.1-Beta";
 
@@ -24,6 +27,7 @@ public final class AntiRelog extends JavaPlugin {
         instance = this;
         config = getConfig();
 
+        loadDepend();
         loadMetrics();
         loadConfig();
 
@@ -41,7 +45,8 @@ public final class AntiRelog extends JavaPlugin {
     }
 
     private void loadListeners() {
-
+        Bukkit.getPluginManager().registerEvents(new WorldGuardListener(), this);
+        Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
     }
 
     private void loadConfig() {
@@ -51,6 +56,18 @@ public final class AntiRelog extends JavaPlugin {
 
     public void loadMetrics() {
         Metrics metrics = new Metrics(this, PLUGIN_ID);
+    }
+
+    public void loadDepend() {
+        if (getServer().getPluginManager().getPlugin("CMI") != null) {
+            CMI_HOOK = true;
+        }
+        if (getServer().getPluginManager().getPlugin("Essentials") != null) {
+            ESSENTIALS_HOOK = true;
+        }
+        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            WORLDGUARD_HOOK = true;
+        }
     }
 
     public static AntiRelog getInstance() {

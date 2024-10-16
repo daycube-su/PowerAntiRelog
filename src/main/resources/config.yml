@@ -1,0 +1,25 @@
+# https://discord.gg/6wGy3sYxzw
+
+settings:
+  cancel-interact: true
+
+  close-inventory: true
+
+  leave:
+    enabled: true
+    kill: true
+    message:
+      - "&r"
+      - "&fИгрок §x§0§0§A§4§F§B{player}, &fпокинул сервер во время PvP!"
+      - "&r"
+
+  disable:
+    fly: true
+    speed: true
+    gamemode: false
+    godmode: false
+    elytra: false
+    invisibility: false
+
+  cancel:
+    interact: true
