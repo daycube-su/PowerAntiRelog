@@ -23,6 +23,7 @@ public class DamageListener implements Listener {
         Player target = (Player) e.getEntity();
         Player damager = DamagerUtility.getDamager(e.getDamager());
 
+        if (damager == null) return;
         PvPManager.addPlayers(target, damager);
     }
 
@@ -40,6 +41,7 @@ public class DamageListener implements Listener {
         Player target = (Player) e.getEntity();
         Player damager = DamagerUtility.getDamager(e.getCombuster());
 
+        if (damager == null) return;
         PvPManager.addPlayers(target, damager);
     }
 }

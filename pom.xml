@@ -77,10 +77,10 @@
       </dependency>
       <dependency>
           <artifactId>CMIAPI</artifactId>
-          <groupId>com.zrips</groupId>
+          <groupId>com.Zrips</groupId>
           <scope>system</scope>
-          <version>random</version>
-          <systemPath>${basedir}/lib/CMIAPI-9.7.4.1.jar</systemPath>
+          <version>9.7.4.1</version>
+          <systemPath>${basedir}/lib/CMI-API9.7.0.1.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>net.essentialsx</groupId>

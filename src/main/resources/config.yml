@@ -1,13 +1,19 @@
 # https://discord.gg/6wGy3sYxzw
 
 settings:
-  cancel-interact: true
+  time: 25
 
-  close-inventory: true
+  bossbar:
+    bar: "&fРежим §x§E§3§2§6§3§6PvP &f- §x§E§3§2§6§3§6{time} сек"
+    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
+    color: RED
+    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
+    style: SOLID
 
   leave:
     enabled: true
     kill: true
+    # null or [] for disabled this
     message:
       - "&r"
       - "&fИгрок §x§0§0§A§4§F§B{player}, &fпокинул сервер во время PvP!"
@@ -23,3 +29,15 @@ settings:
 
   cancel:
     interact: true
+
+  close:
+    inventory: true
+
+messages:
+  start: "§x§E§3§2§6§3§6&l| &fВы начали PvP!"
+  end: "§x§E§3§2§6§3§6&l| &aВы больше не находитесь в бою."
+  block: "§x§E§3§2§6§3§6&l| &cВы не можете делать это в режиме PvP!"
+
+
+
+

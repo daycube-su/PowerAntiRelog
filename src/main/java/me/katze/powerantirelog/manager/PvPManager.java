@@ -3,46 +3,53 @@ package me.katze.powerantirelog.manager;
 import com.Zrips.CMI.CMI;
 import com.Zrips.CMI.Containers.CMIUser;
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.EssentialsUpgrade;
 import com.earth2me.essentials.User;
 import me.katze.powerantirelog.AntiRelog;
+import me.katze.powerantirelog.utility.BossBarUtility;
 import me.katze.powerantirelog.utility.ColorUtility;
-import net.ess3.api.IUser;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PvPManager {
-    private static HashMap<String, LocalTime> pvpMap;
+    private static HashMap<String, Integer> pvpMap;
+
+    public PvPManager() {
+        this.pvpMap = new HashMap<>();
+    }
 
     public static void addPlayers(Player player1, Player player2) {
         String name1 = player1.getName();
         String name2 = player2.getName();
-        LocalTime currentTime = LocalTime.now();
+        int time = AntiRelog.getInstance().getConfig().getInt("settings.time");
 
         if (player1.hasPermission("powerantirelog.bypass")) return;
         if (player2.hasPermission("powerantirelog.bypass")) return;
 
+        player1.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
+        player2.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
+
         disable(player1, player2);
 
-        if (AntiRelog.getInstance().getConfig().getBoolean("settings.close-inventory")) {
+        if (AntiRelog.getInstance().getConfig().getBoolean("settings.close.inventory")) {
             player1.closeInventory();
             player2.closeInventory();
         }
 
         if (pvpMap.containsKey(name1) || pvpMap.containsKey(name2)) {
-            pvpMap.replace(name1, pvpMap.get(name1), currentTime);
-            pvpMap.replace(name2, pvpMap.get(name2), currentTime);
+            pvpMap.replace(name1, pvpMap.get(name1), time);
+            pvpMap.replace(name2, pvpMap.get(name2), time);
         } else {
-            pvpMap.put(name1, currentTime);
-            pvpMap.put(name2, currentTime);
+            pvpMap.put(name1, time);
+            pvpMap.put(name2, time);
         }
     }
 
@@ -79,8 +86,8 @@ public class PvPManager {
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.speed")) {
-            if (player1.getWalkSpeed() != 0.1F) player1.setWalkSpeed(0.1F);
-            if (player2.getWalkSpeed() != 0.1F) player2.setWalkSpeed(0.1F);
+            if (player1.getWalkSpeed() != 0.2F) player1.setWalkSpeed(0.2F);
+            if (player2.getWalkSpeed() != 0.2F) player2.setWalkSpeed(0.2F);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.gamemode")) {
@@ -112,8 +119,8 @@ public class PvPManager {
                 CMIUser user1 = CMI.getInstance().getPlayerManager().getUser(player1);
                 CMIUser user2 = CMI.getInstance().getPlayerManager().getUser(player2);
 
-                if (user1.isGod()) user1.setGod(false);
-                if (user2.isGod()) user2.setGod(false);
+                if (user1.isGod()) user1.setTgod(0);
+                if (user2.isGod()) user2.setTgod(0);
             }
             if (AntiRelog.ESSENTIALS_HOOK == true) {
                 Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
@@ -127,6 +134,42 @@ public class PvPManager {
         }
     }
 
+    public static void startTask() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                update();
+            }
+        }.runTaskTimer(AntiRelog.getInstance(), 0L, 20L);
+    }
 
+    private static void update() {
+        if (pvpMap == null) return;
 
+        Iterator<Map.Entry<String, Integer>> iterator = pvpMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Integer> entry = iterator.next();
+            String name = entry.getKey();
+            int time = entry.getValue() - 1;
+
+            if (time <= 0) {
+                iterator.remove();
+                Player player = Bukkit.getPlayer(name);
+                if (player != null) {
+                    player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.end")));
+                }
+            } else {
+                pvpMap.replace(name, time);
+                BossBarUtility.set(name, time);
+            }
+        }
+    }
+
+    public static void death(Player player) {
+        String name = player.getName();
+
+        if (pvpMap.containsKey(name)) {
+            pvpMap.remove(name);
+        }
+    }
 }
