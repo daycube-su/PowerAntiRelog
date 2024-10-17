@@ -15,7 +15,7 @@ settings:
     # null или [] чтобы отключить
     message:
       - "&r"
-      - "§x§E§3§2§6§3§6&l| &fИгрок §x§0§0§A§4§F§B{player}, &fпокинул сервер во время PvP!"
+      - "§x§E§3§2§6§3§6&l| &fИгрок §x§E§3§2§6§3§6{player}, &fпокинул сервер во время PvP!"
       - "&r"
     # Игрока будет убивать за выход с сервера, если leave.kill включен.
     # Но если игрока кикнет его убьет только в случае данных причин.
@@ -28,7 +28,7 @@ settings:
 
   disable:
     fly: true
-    speed: true
+    speed: false
     gamemode: false
     godmode: false
     elytra: false
@@ -53,9 +53,6 @@ settings:
     - "duels"
     - "duel"
     - "exampleWorld"
-
-  # Предотвращает убийство игроков при выходе с сервера, если сервер залагал к примеру
-  protect: true
 
 messages:
   start: "§x§E§3§2§6§3§6&l| &fВы начали PvP!"

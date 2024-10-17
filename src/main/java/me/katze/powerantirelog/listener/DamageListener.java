@@ -28,8 +28,12 @@ public class DamageListener implements Listener {
 
         if (damager == null) return;
 
-        PvPManager.addPlayer(target);
-        PvPManager.addPlayer(damager);
+        if (!target.hasPermission("powerantirelog.bypass")) {
+            PvPManager.addPlayer(target);
+        }
+        if (!damager.hasPermission("powerantirelog.bypass")) {
+            PvPManager.addPlayer(damager);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -41,20 +45,29 @@ public class DamageListener implements Listener {
 
         if (damager == null) return;
 
-        PvPManager.addPlayer(target);
-        PvPManager.addPlayer(damager);
+        if (!target.hasPermission("powerantirelog.bypass")) {
+            PvPManager.addPlayer(target);
+        }
+        if (!damager.hasPermission("powerantirelog.bypass")) {
+            PvPManager.addPlayer(damager);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPotionSplash(PotionSplashEvent e) {
         if (e.getPotion() != null && e.getPotion().getShooter() instanceof Player) {
-            Player player1 = (Player) e.getPotion().getShooter();
-            for (LivingEntity player2 : e.getAffectedEntities()) {
-                if (player2.getType() == EntityType.PLAYER && player2 != player1) {
+            Player damager = (Player) e.getPotion().getShooter();
+            for (LivingEntity target : e.getAffectedEntities()) {
+                if (target.getType() == EntityType.PLAYER && target != damager) {
                     for (PotionEffect effect : e.getPotion().getEffects()) {
                         if (effect.getType().equals(PotionEffectType.POISON)) {
-                            PvPManager.addPlayer(player1);
-                            PvPManager.addPlayer((Player) player2);
+
+                            if (!damager.hasPermission("powerantirelog.bypass")) {
+                                PvPManager.addPlayer(damager);
+                            }
+                            if (!target.hasPermission("powerantirelog.bypass")) {
+                                PvPManager.addPlayer((Player) target);
+                            }
                         }
                     }
                 }
