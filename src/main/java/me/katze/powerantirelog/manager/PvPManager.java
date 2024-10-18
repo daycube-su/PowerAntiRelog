@@ -10,6 +10,7 @@ import me.katze.powerantirelog.utility.ColorUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -31,7 +32,12 @@ public class PvPManager {
         String name = player.getName();
         int time = AntiRelog.getInstance().getConfig().getInt("settings.time");
 
+        if (player == null) return;
+        if (player.getType() != EntityType.PLAYER) return;
+
         if (player.hasPermission("powerantirelog.bypass")) return;
+        if (player.isOp()) return;
+        if (player.isInvulnerable()) return;
 
         for (String world : AntiRelog.getInstance().getConfig().getStringList("settings.disabled-worlds")) {
             if (player.getWorld().getName() == world) {

@@ -10,13 +10,10 @@ public class DeathListener implements Listener {
 
     @EventHandler
     public void on(PlayerDeathEvent e) {
-        if (e.getEntity() instanceof Player) {
-            Player player = e.getEntity().getPlayer();
+        Player player = e.getEntity().getPlayer();
 
-            if (!PvPManager.isPvP(player)) return;
+        if (!PvPManager.isPvP(player)) return;
 
-            PvPManager.death(player);
-
-        }
+        PvPManager.death(player);
     }
 }
