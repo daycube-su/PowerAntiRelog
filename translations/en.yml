@@ -3,7 +3,7 @@
 # Language Translation: https://github.com/katze225/PowerAntiRelog/tree/main/translations
 
 settings:
-  # Длительность режима PvP
+  # PvP mode duration
   time: 25
 
   bossbar:
@@ -15,20 +15,20 @@ settings:
 
   leave:
     kill: true
-    # null или [] чтобы отключить
+    # null or [] to disable
     message:
       - "&r"
       - "§x§E§3§2§6§3§6&l| &fИгрок §x§E§3§2§6§3§6{player}, &fпокинул сервер во время PvP!"
       - "&r"
-    # Игрока будет убивать за выход с сервера, если leave.kill включен.
-    # Но если игрока кикнет его убьет только в случае данных причин.
+    # Player will be killed for leaving the server if leave.kill is enabled.
+    # But if a player is kicked he will be killed only in case of these reasons.
     kill-reasons:
       - "АнтиЧит"
       - "anticheat"
       - "Читер"
       - "Подозрения в использовании"
 
-  # Что будет отключено в начале боя
+  # What will be disabled at the start of the battle
   disable:
     fly: true
     speed: false
@@ -37,7 +37,7 @@ settings:
     elytra: false
     invisibility: false
 
-  # Какие действия нужно отменять во время боя
+  # What actions should be canceled during combat
   cancel:
     interact: true
     command: true
@@ -46,7 +46,7 @@ settings:
     ender-pearl: false
     ender-chest: true
 
-  # -1 или 0 отключает задержку
+  # -1 or 0 disables the delay
   cooldown:
     golden-apple: 0
     enchanted-golden-apple: 0
@@ -55,24 +55,24 @@ settings:
     firework: 0
     totem: 0
 
-  # Работает только если cancel.command ровно true
+  # Only works if cancel.command is true
   command-whitelist:
     - "msg"
     - "m"
     - "tell"
     - "pm"
 
-  # Миры в которых плагин не будет работать
+  # Worlds in which the plugin will not work
   disabled-worlds:
     - "duels"
     - "duel"
     - "exampleWorld"
 
 messages:
-  start: "§x§E§3§2§6§3§6&l| &fВы начали PvP!"
-  end: "§x§E§3§2§6§3§6&l| &aВы больше не находитесь в бою."
-  block: "§x§E§3§2§6§3§6&l| &cВы не можете делать это в режиме PvP!"
-  cooldown: "§x§E§3§2§6§3§6&l| &fПодождите §x§E§3§2§6§3§6{time}, &fчтобы использовать этот предмет!"
+  start: "§x§E§3§2§6§3§6&l| &fYou started PvP!"
+  end: "§x§E§3§2§6§3§6&l| &aYou are no longer in combat."
+  block: "§x§E§3§2§6§3§6&l| &cYou can't do this in PvP mode!"
+  cooldown: "§x§E§3§2§6§3§6&l| &fWait §x§E§3§2§6§3§6{time}, &fto use this item!"
 
 
 

@@ -6,10 +6,10 @@
 
   <groupId>me.katze</groupId>
   <artifactId>PowerAntiRelog</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
   <packaging>jar</packaging>
 
-  <name>PowerAntiRelog</name>
+  <name>powerantirelog</name>
 
   <properties>
     <java.version>1.8</java.version>

@@ -1,4 +1,4 @@
-name: PowerAntiRelog
+name: powerantirelog
 version: '${project.version}'
 main: me.katze.powerantirelog.AntiRelog
 api-version: '1.16'

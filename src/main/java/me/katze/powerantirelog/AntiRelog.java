@@ -8,8 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Logger;
-
 public final class AntiRelog extends JavaPlugin {
 
     public static boolean CMI_HOOK = false;
@@ -17,10 +15,10 @@ public final class AntiRelog extends JavaPlugin {
     public static boolean WORLDGUARD_HOOK = false;
 
     private static final int PLUGIN_ID = 23642;
-    public static final String VERSION = "0.1-Beta";
+    public static final String VERSION = "0.3-Beta";
+    public static final String DISCORD_URL = "https://discord.gg/6wGy3sYxzw";
 
     private static AntiRelog instance;
-    private static final Logger LOGGER = Logger.getLogger("PowerAntiRelog");
     private FileConfiguration config;
 
     public PvPManager pvpmanager;
@@ -30,6 +28,9 @@ public final class AntiRelog extends JavaPlugin {
     public void onEnable() {
         instance = this;
         config = getConfig();
+
+        System.out.println("Plugin version: " + VERSION);
+        System.out.println("Support: " + DISCORD_URL);
 
         loadDepend();
         loadMetrics();
