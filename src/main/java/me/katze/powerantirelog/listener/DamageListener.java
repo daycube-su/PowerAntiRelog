@@ -61,7 +61,6 @@ public class DamageListener implements Listener {
                 if (target.getType() == EntityType.PLAYER && target != damager) {
                     for (PotionEffect effect : e.getPotion().getEffects()) {
                         if (effect.getType().equals(PotionEffectType.POISON)) {
-
                             if (!damager.hasPermission("powerantirelog.bypass")) {
                                 PvPManager.addPlayer(damager);
                             }

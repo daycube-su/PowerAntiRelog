@@ -3,6 +3,7 @@ package me.katze.powerantirelog.listener;
 import me.katze.powerantirelog.AntiRelog;
 import me.katze.powerantirelog.data.CooldownData;
 import me.katze.powerantirelog.manager.CooldownManager;
+import me.katze.powerantirelog.manager.PvPManager;
 import me.katze.powerantirelog.utility.ColorUtility;
 import org.bukkit.Material;
 import org.bukkit.entity.Firework;
@@ -24,10 +25,11 @@ public class CooldownListener implements Listener {
         if (e.getEntity() instanceof Player && e.isCancelled() == false) {
             if (e.getEntity().getEquipment() != null && (e.getEntity().getEquipment().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING
                     || e.getEntity().getEquipment().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING)) {
-
                 Player player = ((Player) e.getEntity()).getPlayer();
-                CooldownData data = CooldownManager.getPlayer(player);
 
+                if (!PvPManager.isPvP(player)) return;
+
+                CooldownData data = CooldownManager.getPlayer(player);
                 ItemStack itemStack = null;
 
                 ItemStack mainHandItem = player.getInventory().getItemInMainHand();
@@ -66,6 +68,9 @@ public class CooldownListener implements Listener {
     public void onPlayerUse(PlayerInteractEvent e) {
         if (e.getItem() != null) {
             Player player = e.getPlayer();
+
+            if (!PvPManager.isPvP(player)) return;
+
             CooldownData data = CooldownManager.getPlayer(player);
             ItemStack itemStack = e.getItem();
             int configTime = getCooldown(itemStack.getType());
@@ -99,8 +104,10 @@ public class CooldownListener implements Listener {
         if (e.getEntity() instanceof Firework) {
             if (e.getEntity().getShooter() instanceof Player) {
                 Player player = (Player) e.getEntity().getShooter();
-                CooldownData data = CooldownManager.getPlayer(player);
 
+                if (!PvPManager.isPvP(player)) return;
+
+                CooldownData data = CooldownManager.getPlayer(player);
                 ItemStack itemStack = null;
 
                 ItemStack mainHandItem = player.getInventory().getItemInMainHand();
