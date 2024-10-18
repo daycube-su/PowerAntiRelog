@@ -41,10 +41,12 @@ public class CooldownListener implements Listener {
                 if (offHandItem != null && offHandItem.getType() == Material.TOTEM_OF_UNDYING) {
                     itemStack = offHandItem;
                 }
+
+                int configTime = AntiRelog.getInstance().getConfig().getInt("settings.cooldown.totem");
+
                 if (data != null) {
                     LocalTime now = LocalTime.now();
                     LocalTime cooldown = data.getTime();
-                    int configTime = AntiRelog.getInstance().getConfig().getInt("settings.cooldown.totem");
 
                     Duration timePassed = Duration.between(cooldown, now);
                     long secondsPassed = timePassed.getSeconds();
@@ -58,6 +60,7 @@ public class CooldownListener implements Listener {
                     }
 
                 } else {
+                    if (itemStack == null) return;
                     CooldownManager.addPlayer(player, itemStack);
                 }
             }
@@ -75,6 +78,7 @@ public class CooldownListener implements Listener {
             ItemStack itemStack = e.getItem();
             int configTime = getCooldown(itemStack.getType());
             if (data == null) {
+                if (itemStack == null) return;
                 CooldownManager.addPlayer(player, itemStack);
                 return;
             }
@@ -137,6 +141,7 @@ public class CooldownListener implements Listener {
                     }
 
                 } else {
+                    if (itemStack == null) return;
                     CooldownManager.addPlayer(player, itemStack);
                 }
             }
