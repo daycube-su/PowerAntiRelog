@@ -18,7 +18,7 @@
 
 ### Commands
 - /ar help - List of commands
-- /ar reload Reloads the configuration
+- /ar reload - Reloads the configuration
 - /ar test {player} - Gives the player a battle mode
 ### Permissions
 - powerantirelog.bypass - Player will not be given PvP mode
