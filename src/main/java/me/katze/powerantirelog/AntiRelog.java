@@ -1,6 +1,7 @@
 package me.katze.powerantirelog;
 
 import me.katze.powerantirelog.listener.*;
+import me.katze.powerantirelog.manager.CooldownManager;
 import me.katze.powerantirelog.manager.PvPManager;
 import me.katze.powerantirelog.utility.Metrics;
 import org.bukkit.Bukkit;
@@ -23,6 +24,7 @@ public final class AntiRelog extends JavaPlugin {
     private FileConfiguration config;
 
     public PvPManager pvpmanager;
+    public CooldownManager cooldownManager;
 
     @Override
     public void onEnable() {
@@ -37,6 +39,7 @@ public final class AntiRelog extends JavaPlugin {
         loadCommands();
 
         pvpmanager = new PvPManager();
+        cooldownManager = new CooldownManager();
     }
 
     @Override
@@ -52,6 +55,7 @@ public final class AntiRelog extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new TeleportListener(), this);
         Bukkit.getPluginManager().registerEvents(new InteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CooldownListener(), this);
     }
 
     private void loadConfig() {

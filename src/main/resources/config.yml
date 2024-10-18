@@ -1,6 +1,7 @@
 # https://discord.gg/6wGy3sYxzw
 
 settings:
+  # Длительность режима PvP
   time: 25
 
   bossbar:
@@ -19,13 +20,13 @@ settings:
       - "&r"
     # Игрока будет убивать за выход с сервера, если leave.kill включен.
     # Но если игрока кикнет его убьет только в случае данных причин.
-    # Если игрок просто выйдет, его убьет, не зависимо от причин
     kill-reasons:
       - "АнтиЧит"
       - "anticheat"
       - "Читер"
       - "Подозрения в использовании"
 
+  # Что будет отключено в начале боя
   disable:
     fly: true
     speed: false
@@ -34,6 +35,7 @@ settings:
     elytra: false
     invisibility: false
 
+  # Какие действия нужно отменять во время боя
   cancel:
     interact: true
     command: true
@@ -42,6 +44,15 @@ settings:
     ender-pearl: false
     ender-chest: true
 
+  # -1 или 0 отключает задержку
+  cooldown:
+    golden-apple: 0
+    enchanted-golden-apple: 0
+    ender-pearl: 0
+    chorus: 0
+    firework: 0
+    totem: 0
+
   # Работает только если cancel.command ровно true
   command-whitelist:
     - "msg"
@@ -49,6 +60,7 @@ settings:
     - "tell"
     - "pm"
 
+  # Миры в которых плагин не будет работать
   disabled-worlds:
     - "duels"
     - "duel"
@@ -58,7 +70,7 @@ messages:
   start: "§x§E§3§2§6§3§6&l| &fВы начали PvP!"
   end: "§x§E§3§2§6§3§6&l| &aВы больше не находитесь в бою."
   block: "§x§E§3§2§6§3§6&l| &cВы не можете делать это в режиме PvP!"
-
+  cooldown: "§x§E§3§2§6§3§6&l| &fПодождите §x§E§3§2§6§3§6{time}, &fчтобы использовать этот предмет!"
 
 
 
