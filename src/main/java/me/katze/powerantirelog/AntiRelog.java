@@ -1,5 +1,9 @@
 package me.katze.powerantirelog;
 
+import co.aikar.commands.PaperCommandManager;
+import me.katze.powerantirelog.command.HelpCommand;
+import me.katze.powerantirelog.command.ReloadCommand;
+import me.katze.powerantirelog.command.TestCommand;
 import me.katze.powerantirelog.listener.*;
 import me.katze.powerantirelog.manager.CooldownManager;
 import me.katze.powerantirelog.manager.PvPManager;
@@ -15,7 +19,7 @@ public final class AntiRelog extends JavaPlugin {
     public static boolean WORLDGUARD_HOOK = false;
 
     private static final int PLUGIN_ID = 23642;
-    public static final String VERSION = "0.3-Beta";
+    public static final String VERSION = "1.0-RELEASE";
     public static final String DISCORD_URL = "https://discord.gg/6wGy3sYxzw";
 
     private static AntiRelog instance;
@@ -46,7 +50,13 @@ public final class AntiRelog extends JavaPlugin {
     @Override
     public void onDisable() {}
 
-    private void loadCommands() {}
+    private void loadCommands() {
+        PaperCommandManager commandManager = new PaperCommandManager(AntiRelog.getInstance());
+
+        commandManager.registerCommand(new HelpCommand());
+        commandManager.registerCommand(new ReloadCommand());
+        commandManager.registerCommand(new TestCommand());
+    }
 
     private void loadListeners() {
         Bukkit.getPluginManager().registerEvents(new WorldGuardListener(), this);

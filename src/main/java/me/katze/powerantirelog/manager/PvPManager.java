@@ -90,6 +90,7 @@ public class PvPManager {
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.speed")) {
             if (player.getWalkSpeed() != 0.2F) player.setWalkSpeed(0.2F);
+
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.gamemode")) {

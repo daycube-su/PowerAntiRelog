@@ -18,35 +18,41 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamageByEntity(EntityDamageByEntityEvent e) {
-        Player target = (Player) e.getEntity();
-        Player damager = DamagerUtility.getDamager(e.getDamager());
+        if (e.getEntity() instanceof Player) {
+            Player target = (Player) e.getEntity();
+            Player damager = DamagerUtility.getDamager(e.getDamager());
 
-        PvPManager.addPlayer(target);
-        PvPManager.addPlayer(damager);
+            PvPManager.addPlayer(target);
+            PvPManager.addPlayer(damager);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCombust(EntityCombustByEntityEvent e) {
-        Player target = (Player) e.getEntity();
-        Player damager = DamagerUtility.getDamager(e.getCombuster());
+        if (e.getEntity() instanceof Player) {
+            Player target = (Player) e.getEntity();
+            Player damager = DamagerUtility.getDamager(e.getCombuster());
 
-        PvPManager.addPlayer(target);
-        PvPManager.addPlayer(damager);
+            PvPManager.addPlayer(target);
+            PvPManager.addPlayer(damager);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPotionSplash(PotionSplashEvent e) {
-        if (e.getPotion() == null) return;
+        if (e.getEntity() instanceof Player) {
+            if (e.getPotion() == null) return;
 
-        Player damager = (Player) e.getPotion().getShooter();
+            Player damager = (Player) e.getPotion().getShooter();
 
-        for (LivingEntity target : e.getAffectedEntities()) {
-            if (target == damager) return;
+            for (LivingEntity target : e.getAffectedEntities()) {
+                if (target == damager) return;
 
-            for (PotionEffect effect : e.getPotion().getEffects()) {
-                if (effect.getType().equals(PotionEffectType.POISON)) {
-                    PvPManager.addPlayer(damager);
-                    PvPManager.addPlayer((Player) target);
+                for (PotionEffect effect : e.getPotion().getEffects()) {
+                    if (effect.getType().equals(PotionEffectType.POISON)) {
+                        PvPManager.addPlayer(damager);
+                        PvPManager.addPlayer((Player) target);
+                    }
                 }
             }
         }
