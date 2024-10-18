@@ -12,9 +12,9 @@
 - Paper 1.16.5+
 
 ### Supported plugins (Optional)​
-WorldGuard
-CMI
-Essentials
+- WorldGuard
+- CMI
+- Essentials
 
 ### Commands
 - /ar help - List of commands
