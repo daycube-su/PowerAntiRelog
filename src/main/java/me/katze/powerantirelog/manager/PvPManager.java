@@ -81,6 +81,11 @@ public class PvPManager {
     private static void disable(Player player) {
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.fly")) {
             if (player.isFlying()) player.setFlying(false);
+            if (AntiRelog.CMI_HOOK == true) {
+                CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
+
+                if (user.isFlying()) user.setFlying(false);
+            }
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.speed")) {
@@ -111,10 +116,8 @@ public class PvPManager {
             }
             if (AntiRelog.ESSENTIALS_HOOK == true) {
                 Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-
                 User user = essentials.getUser(player);
 
-                if (user.isGodModeEnabled()) user.setGodModeEnabled(false);
                 if (user.isGodModeEnabled()) user.setGodModeEnabled(false);
             }
         }
