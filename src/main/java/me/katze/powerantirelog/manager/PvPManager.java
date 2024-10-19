@@ -80,25 +80,26 @@ public class PvPManager {
 
     private static void disable(Player player) {
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.fly")) {
-            if (player.isFlying()) player.setFlying(false);
+            player.setFlying(false);
+            player.setAllowFlight(false);
             if (AntiRelog.CMI_HOOK == true) {
                 CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
-                if (user.isFlying()) user.setFlying(false);
+                user.setFlying(false);
             }
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.speed")) {
-            if (player.getWalkSpeed() != 0.2F) player.setWalkSpeed(0.2F);
+            player.setWalkSpeed(0.2F);
 
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.gamemode")) {
-            if (player.getGameMode() != GameMode.SURVIVAL) player.setGameMode(GameMode.SURVIVAL);
+            player.setGameMode(GameMode.SURVIVAL);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.invisibility")) {
-            if (player.getActivePotionEffects().contains(PotionEffectType.INVISIBILITY)) player.removePotionEffect(PotionEffectType.INVISIBILITY);
+            player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.elytra")) {
@@ -113,13 +114,14 @@ public class PvPManager {
             if (AntiRelog.CMI_HOOK == true) {
                 CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
-                if (user.isGod()) user.setTgod(0);
+                CMI.getInstance().getNMS().changeGodMode(player, false);
+                user.setTgod(0);
             }
             if (AntiRelog.ESSENTIALS_HOOK == true) {
                 Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
                 User user = essentials.getUser(player);
 
-                if (user.isGodModeEnabled()) user.setGodModeEnabled(false);
+                user.setGodModeEnabled(false);
             }
         }
     }
