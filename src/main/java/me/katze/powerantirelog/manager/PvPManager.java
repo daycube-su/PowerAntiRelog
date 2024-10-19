@@ -86,12 +86,13 @@ public class PvPManager {
                 CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
                 user.setFlying(false);
+                user.setWasFlying(false);
+                user.setTfly(0);
             }
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.speed")) {
             player.setWalkSpeed(0.2F);
-
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.gamemode")) {
