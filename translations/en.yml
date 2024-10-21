@@ -20,13 +20,6 @@ settings:
       - "&r"
       - "§x§E§3§2§6§3§6&l| &fИгрок §x§E§3§2§6§3§6{player}, &fпокинул сервер во время PvP!"
       - "&r"
-    # Player will be killed for leaving the server if leave.kill is enabled.
-    # But if a player is kicked he will be killed only in case of these reasons.
-    kill-reasons:
-      - "АнтиЧит"
-      - "anticheat"
-      - "Читер"
-      - "Подозрения в использовании"
 
   # What will be disabled at the start of the battle
   disable:

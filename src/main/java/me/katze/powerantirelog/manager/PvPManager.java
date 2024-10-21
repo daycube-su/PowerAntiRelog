@@ -38,9 +38,10 @@ public class PvPManager {
         if (player.hasPermission("powerantirelog.bypass")) return;
         if (player.isOp()) return;
         if (player.isInvulnerable()) return;
+        if (player.isDead()) return;
 
         for (String world : AntiRelog.getInstance().getConfig().getStringList("settings.disabled-worlds")) {
-            if (player.getWorld().getName() == world) {
+            if (player.getWorld().getName().contains(world)) {
                 return;
             }
         }
@@ -73,7 +74,6 @@ public class PvPManager {
             String replacedString = ColorUtility.getMsg(string).replace("{player}", player.getName());
             Bukkit.getServer().broadcastMessage(replacedString);
         }
-
 
         pvpMap.remove(player.getName());
     }
