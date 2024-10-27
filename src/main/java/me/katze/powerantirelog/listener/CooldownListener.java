@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.time.Duration;
@@ -33,12 +34,12 @@ public class CooldownListener implements Listener {
                 ItemStack itemStack = null;
 
                 ItemStack mainHandItem = player.getInventory().getItemInMainHand();
-                if (mainHandItem != null && mainHandItem.getType() == Material.TOTEM_OF_UNDYING) {
+                if (mainHandItem.getType() == Material.TOTEM_OF_UNDYING) {
                     itemStack = mainHandItem;
                 }
 
                 ItemStack offHandItem = player.getInventory().getItemInOffHand();
-                if (offHandItem != null && offHandItem.getType() == Material.TOTEM_OF_UNDYING) {
+                if (offHandItem.getType() == Material.TOTEM_OF_UNDYING) {
                     itemStack = offHandItem;
                 }
 
@@ -60,7 +61,6 @@ public class CooldownListener implements Listener {
                     }
 
                 } else {
-                    if (itemStack == null) return;
                     CooldownManager.addPlayer(player, itemStack);
                 }
             }
@@ -68,7 +68,7 @@ public class CooldownListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerUse(PlayerInteractEvent e) {
+    public void onPlayerConsume(PlayerItemConsumeEvent e) {
         if (e.getItem() != null) {
             Player player = e.getPlayer();
 
@@ -77,13 +77,12 @@ public class CooldownListener implements Listener {
             CooldownData data = CooldownManager.getPlayer(player);
             ItemStack itemStack = e.getItem();
             int configTime = getCooldown(itemStack.getType());
-            if (data == null) {
-                if (itemStack == null) return;
-                CooldownManager.addPlayer(player, itemStack);
-                return;
-            }
 
-            if (configTime > 0) {
+            if (itemStack.getType() == Material.CHORUS_FRUIT || itemStack.getType() == Material.ENDER_PEARL) return;
+
+            if (data != null) {
+                if (configTime < 0) return;
+
                 LocalTime now = LocalTime.now();
                 LocalTime cooldown = data != null ? data.getTime() : null;
 
@@ -97,9 +96,10 @@ public class CooldownListener implements Listener {
                     player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.cooldown")
                             .replace("{time}", String.valueOf(remainingTime))));
                     e.setCancelled(true);
+                    return;
                 }
-
             }
+            CooldownManager.addPlayer(player, itemStack);
         }
     }
 
@@ -115,12 +115,13 @@ public class CooldownListener implements Listener {
                 ItemStack itemStack = null;
 
                 ItemStack mainHandItem = player.getInventory().getItemInMainHand();
-                if (mainHandItem != null && mainHandItem.getType() == Material.TOTEM_OF_UNDYING) {
+
+                if (mainHandItem.getType() == Material.TOTEM_OF_UNDYING) {
                     itemStack = mainHandItem;
                 }
 
                 ItemStack offHandItem = player.getInventory().getItemInOffHand();
-                if (offHandItem != null && offHandItem.getType() == Material.TOTEM_OF_UNDYING) {
+                if (offHandItem.getType() == Material.TOTEM_OF_UNDYING) {
                     itemStack = offHandItem;
                 }
 
@@ -141,7 +142,6 @@ public class CooldownListener implements Listener {
                     }
 
                 } else {
-                    if (itemStack == null) return;
                     CooldownManager.addPlayer(player, itemStack);
                 }
             }

@@ -15,6 +15,8 @@ public class CooldownManager {
     }
 
     public static void addPlayer(Player player, ItemStack itemStack) {
+        if (itemStack == null) return;
+
         CooldownData data = new CooldownData(LocalTime.now(), itemStack.getItemMeta().getLocalizedName());
 
         cooldownMap.put(player.getName(), data);
