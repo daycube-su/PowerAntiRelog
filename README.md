@@ -26,6 +26,10 @@
 - powerantirelog.reload- Access the command /ar reload
 - powerantirelog.test- Access the command /ar test {player}
 
+### Screenshots
+- ![img1](img/img1.jpg)
+- ![img2](img/img1.jpg)
+
 ### License
 See the [LICENSE](LICENSE.md) file for license rights and limitations.
 
