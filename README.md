@@ -28,7 +28,7 @@
 
 ### Screenshots
 - ![img1](img/img1.jpg)
-- ![img2](img/img1.jpg)
+- ![img2](img/img2.jpg)
 
 ### License
 See the [LICENSE](LICENSE.md) file for license rights and limitations.
