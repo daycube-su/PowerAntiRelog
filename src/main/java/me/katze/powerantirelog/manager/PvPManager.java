@@ -29,16 +29,15 @@ public class PvPManager {
     }
 
     public static void addPlayer(Player player) {
-        String name = player.getName();
-        int time = AntiRelog.getInstance().getConfig().getInt("settings.time");
-
         if (player == null) return;
         if (player.getType() != EntityType.PLAYER) return;
-
         if (player.hasPermission("powerantirelog.bypass")) return;
         if (player.isOp()) return;
         if (player.isInvulnerable()) return;
         if (player.isDead()) return;
+
+        String name = player.getName();
+        int time = AntiRelog.getInstance().getConfig().getInt("settings.time");
 
         for (String world : AntiRelog.getInstance().getConfig().getStringList("settings.disabled-worlds")) {
             if (player.getWorld().getName().contains(world)) {
