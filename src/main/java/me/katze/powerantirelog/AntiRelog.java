@@ -20,6 +20,7 @@ public final class AntiRelog extends JavaPlugin {
 
     private static final int PLUGIN_ID = 23642;
     public static final String VERSION = "1.0-RELEASE";
+    public static final String CREATOR = "https://github.com/katze225/PowerAntiRelog";
     public static final String DISCORD_URL = "https://discord.gg/6wGy3sYxzw";
 
     private static AntiRelog instance;
@@ -33,7 +34,8 @@ public final class AntiRelog extends JavaPlugin {
         instance = this;
         config = getConfig();
 
-        System.out.println("Plugin version: " + VERSION);
+        System.out.println("Version: " + CREATOR);
+        System.out.println("By: " + VERSION);
         System.out.println("Support: " + DISCORD_URL);
 
         loadDepend();

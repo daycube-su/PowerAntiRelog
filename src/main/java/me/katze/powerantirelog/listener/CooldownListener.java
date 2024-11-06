@@ -148,7 +148,6 @@ public class CooldownListener implements Listener {
         }
     }
 
-
     private int getCooldown(Material material) {
         switch (material) {
             case FIRE_CHARGE:

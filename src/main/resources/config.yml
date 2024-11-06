@@ -39,7 +39,7 @@ settings:
     ender-pearl: false
     ender-chest: true
 
-  # -1 или 0 отключает задержку
+  # Установите 0, чтобы отключить задержки
   cooldown:
     golden-apple: 0
     enchanted-golden-apple: 0
