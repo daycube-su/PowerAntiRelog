@@ -55,6 +55,11 @@ settings:
     - "tell"
     - "pm"
 
+  # Команды в начале или конце боя. Заполнители: {player}, [console], [player]. Выполняется для каждого игрока отдельно!
+  # Пример: "[console] msg {player} Удачи в бою!"
+  command-start: []
+  command-end: []
+
   # Миры в которых плагин не будет работать
   disabled-worlds:
     - "duels"

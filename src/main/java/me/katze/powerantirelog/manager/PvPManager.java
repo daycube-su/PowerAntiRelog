@@ -10,6 +10,7 @@ import me.katze.powerantirelog.utility.ColorUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class PvPManager {
@@ -50,6 +52,7 @@ public class PvPManager {
         } else {
             player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
 
+            sendCommands(true, player);
             disable(player);
             pvpMap.put(name, time);
         }
@@ -151,6 +154,7 @@ public class PvPManager {
                 if (player != null) {
                     player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.end")));
                 }
+                sendCommands(false, player);
             } else {
                 pvpMap.replace(name, time);
                 BossBarUtility.set(name, time);
@@ -163,6 +167,28 @@ public class PvPManager {
 
         if (pvpMap.containsKey(name)) {
             pvpMap.remove(name);
+        }
+    }
+
+    private static void sendCommands(boolean start, Player player) {
+        List<String> commands;
+        if (start == true) {
+            commands = AntiRelog.getInstance().getConfig().getStringList("settings.command-start");
+        } else {
+            commands = AntiRelog.getInstance().getConfig().getStringList("settings.command-end");
+        }
+
+        for (String string : commands) {
+            CommandSender sender = null;
+
+            if (string.startsWith("[console]")) {
+                sender = Bukkit.getConsoleSender();
+            } else if (string.startsWith("[player]")) {
+                sender = player.getPlayer();
+            }
+
+            String replacedString = string.replace("{player}", player.getName());
+            Bukkit.getServer().dispatchCommand(sender, replacedString);
         }
     }
 }
