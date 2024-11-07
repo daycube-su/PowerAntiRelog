@@ -32,7 +32,7 @@ public class PvPManager {
 
     public static void addPlayer(Player player) {
         if (player == null) return;
-        if (player.getType() != EntityType.PLAYER) return;
+        if (!(player instanceof Player)) return;
         if (player.hasPermission("powerantirelog.bypass")) return;
         if (player.isOp()) return;
         if (player.isInvulnerable()) return;
