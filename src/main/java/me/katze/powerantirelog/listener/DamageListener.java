@@ -2,7 +2,6 @@ package me.katze.powerantirelog.listener;
 
 import me.katze.powerantirelog.manager.PvPManager;
 import me.katze.powerantirelog.utility.DamagerUtility;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,7 +22,7 @@ public class DamageListener implements Listener {
         Player target = (Player) e.getEntity();
         Player damager = DamagerUtility.getDamager(e.getDamager());
 
-        if (damager == null || target == null) return;
+        if (damager == null && target == null) return;
 
         PvPManager.addPlayer(target);
         PvPManager.addPlayer(damager);
@@ -31,10 +30,12 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCombust(EntityCombustByEntityEvent e) {
+        if (!(e.getEntity() instanceof Player)) return;
+
         Player target = (Player) e.getEntity();
         Player damager = DamagerUtility.getDamager(e.getCombuster());
 
-        if (damager == null || target == null) return;
+        if (damager == null && target == null) return;
 
         PvPManager.addPlayer(target);
         PvPManager.addPlayer(damager);
