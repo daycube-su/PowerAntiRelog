@@ -57,6 +57,10 @@ public class CooldownListener implements Listener {
                         CooldownManager.removePlayer(player);
                     } else {
                         player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.cooldown").replace("{time}", String.valueOf(remainingTime))));
+                        if (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != null ||
+                                (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != "")) {
+                            player.sendTitle("", AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle").replace("{time}", String.valueOf(remainingTime)), 6, 40, 6);
+                        }
                         e.setCancelled(true);
                     }
 
@@ -95,6 +99,10 @@ public class CooldownListener implements Listener {
                 } else {
                     player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.cooldown")
                             .replace("{time}", String.valueOf(remainingTime))));
+                    if (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != null ||
+                            (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != "")) {
+                        player.sendTitle("", AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle").replace("{time}", String.valueOf(remainingTime)), 6, 40, 6);
+                    }
                     e.setCancelled(true);
                     return;
                 }
@@ -138,6 +146,10 @@ public class CooldownListener implements Listener {
                         CooldownManager.removePlayer(player);
                     } else {
                         player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.cooldown").replace("{time}", String.valueOf(remainingTime))));
+                        if (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != null ||
+                                (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != "")) {
+                            player.sendTitle("", AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle").replace("{time}", String.valueOf(remainingTime)), 6, 40, 6);
+                        }
                         e.setCancelled(true);
                     }
 
