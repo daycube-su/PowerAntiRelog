@@ -21,7 +21,7 @@ public final class AntiRelog extends JavaPlugin {
     private static final int PLUGIN_ID = 23642;
     public static final String VERSION = "1.0-RELEASE";
     public static final String CREATOR = "https://github.com/katze225/PowerAntiRelog";
-    public static final String DISCORD_URL = "https://discord.gg/6wGy3sYxzw";
+    public static final String TELEGRAM_URL = "https://t.me/apaathy3";
 
     private static AntiRelog instance;
     private FileConfiguration config;
@@ -36,7 +36,7 @@ public final class AntiRelog extends JavaPlugin {
 
         System.out.println("Version: " + CREATOR);
         System.out.println("By: " + VERSION);
-        System.out.println("Support: " + DISCORD_URL);
+        System.out.println("Support: " + TELEGRAM_URL);
 
         loadDepend();
         loadMetrics();
