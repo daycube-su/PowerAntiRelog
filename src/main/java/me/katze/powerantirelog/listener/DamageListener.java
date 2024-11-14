@@ -20,9 +20,10 @@ public class DamageListener implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
 
         Player target = (Player) e.getEntity();
-        Player damager = DamagerUtility.getDamager(e.getDamager());
+        Player damager = (Player) e.getDamager();
 
         if (damager == null && target == null) return;
+        if (!(target instanceof Player) || !(damager instanceof Player)) return;
 
         PvPManager.addPlayer(target);
         PvPManager.addPlayer(damager);
@@ -36,6 +37,7 @@ public class DamageListener implements Listener {
         Player damager = DamagerUtility.getDamager(e.getCombuster());
 
         if (damager == null && target == null) return;
+        if (!(target instanceof Player) || !(damager instanceof Player)) return;
 
         PvPManager.addPlayer(target);
         PvPManager.addPlayer(damager);
@@ -52,6 +54,8 @@ public class DamageListener implements Listener {
 
             for (PotionEffect effect : e.getPotion().getEffects()) {
                 if (effect.getType().equals(PotionEffectType.POISON)) {
+
+                    if (!(target instanceof Player) || !(damager instanceof Player)) return;
 
                     PvPManager.addPlayer(damager);
                     PvPManager.addPlayer((Player) target);

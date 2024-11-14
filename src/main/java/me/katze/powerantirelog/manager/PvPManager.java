@@ -51,7 +51,6 @@ public class PvPManager {
             pvpMap.replace(name, pvpMap.get(name), time);
         } else {
             player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
-
             sendCommands(true, player);
             disable(player);
             pvpMap.put(name, time);
@@ -153,8 +152,8 @@ public class PvPManager {
                 Player player = Bukkit.getPlayer(name);
                 if (player != null) {
                     player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.end")));
+                    sendCommands(false, player);
                 }
-                sendCommands(false, player);
             } else {
                 pvpMap.replace(name, time);
                 BossBarUtility.set(name, time);
