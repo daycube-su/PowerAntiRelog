@@ -178,7 +178,6 @@ public class PvPManager {
         }
 
         for (String string : commands) {
-            System.out.println(string);
             CommandSender sender = null;
 
             if (string.startsWith("[console]")) {
@@ -190,7 +189,6 @@ public class PvPManager {
             String replacedString = string.replace("{player}", player.getName())
                     .replace("[player]", "")
                     .replace("[console]", "");
-            System.out.println(replacedString);
             Bukkit.getServer().dispatchCommand(sender, replacedString);
         }
     }
