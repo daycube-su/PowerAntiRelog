@@ -32,4 +32,8 @@ public class CooldownManager {
     public static void removePlayer(Player player) {
         cooldownMap.remove(player.getName());
     }
+
+    public static void clearMap() {
+        cooldownMap.clear();
+    }
 }
