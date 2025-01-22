@@ -85,7 +85,7 @@ public class CooldownListener implements Listener {
             if (itemStack.getType() == Material.CHORUS_FRUIT || itemStack.getType() == Material.ENDER_PEARL) return;
 
             if (data != null) {
-                if (configTime < 0) return;
+                if (configTime <= 0) return;
 
                 LocalTime now = LocalTime.now();
                 LocalTime cooldown = data != null ? data.getTime() : null;

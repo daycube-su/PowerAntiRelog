@@ -44,7 +44,7 @@ public class TeleportListener implements Listener {
             }
 
             if (data != null) {
-                if (configTime < 0) return;
+                if (configTime <= 0) return;
 
                 LocalTime now = LocalTime.now();
                 LocalTime cooldown = data.getTime();
