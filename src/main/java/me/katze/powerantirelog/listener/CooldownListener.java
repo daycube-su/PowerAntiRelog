@@ -46,6 +46,8 @@ public class CooldownListener implements Listener {
                 int configTime = AntiRelog.getInstance().getConfig().getInt("settings.cooldown.totem");
 
                 if (data != null) {
+                    if (configTime <= 0) return;
+
                     LocalTime now = LocalTime.now();
                     LocalTime cooldown = data.getTime();
 
@@ -133,10 +135,13 @@ public class CooldownListener implements Listener {
                     itemStack = offHandItem;
                 }
 
+                int configTime = AntiRelog.getInstance().getConfig().getInt("settings.cooldown.firework");
+
                 if (data != null) {
+                    if (configTime <= 0) return;
+
                     LocalTime now = LocalTime.now();
                     LocalTime cooldown = data.getTime();
-                    int configTime = AntiRelog.getInstance().getConfig().getInt("settings.cooldown.firework");
 
                     Duration timePassed = Duration.between(cooldown, now);
                     long secondsPassed = timePassed.getSeconds();
