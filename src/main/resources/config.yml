@@ -46,6 +46,7 @@ settings:
     chorus: 0
     firework: 0
     totem: 0
+    trident: 0
 
   # Работает только если cancel.command ровно true
   command-whitelist:
