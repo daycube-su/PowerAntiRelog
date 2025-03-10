@@ -105,8 +105,9 @@ public class PvPManager {
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
 
-        if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.elytra")) {
-            if (player.getInventory().getChestplate().getType() != Material.ELYTRA) {
+        if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.elytra")
+                && player.getInventory().getChestplate() != null) {
+            if (player.getInventory().getChestplate().getType() == Material.ELYTRA) {
                 ItemStack itemStack = player.getInventory().getChestplate();
                 player.getInventory().getChestplate().setType(null);
                 player.getInventory().addItem(itemStack);
