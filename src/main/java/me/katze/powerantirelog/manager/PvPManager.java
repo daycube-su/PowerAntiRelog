@@ -11,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -31,12 +30,18 @@ public class PvPManager {
     }
 
     public static void addPlayer(Player player) {
-        if (player == null) return;
-        if (!(player instanceof Player)) return;
-        if (player.hasPermission("powerantirelog.bypass")) return;
-        if (player.isOp()) return;
-        if (player.isInvulnerable()) return;
-        if (player.isDead()) return;
+        if (player == null)
+            return;
+        if (!(player instanceof Player))
+            return;
+        if (player.hasPermission("powerantirelog.bypass"))
+            return;
+        if (player.isOp())
+            return;
+        if (player.isInvulnerable())
+            return;
+        if (player.isDead())
+            return;
 
         String name = player.getName();
         int time = AntiRelog.getInstance().getConfig().getInt("settings.time");
@@ -87,9 +92,11 @@ public class PvPManager {
             if (AntiRelog.CMI_HOOK == true) {
                 CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
-                user.setFlying(false);
-                user.setWasFlying(false);
-                user.setTfly(0);
+                if (user != null) {
+                    user.setFlying(false);
+                    user.setWasFlying(false);
+                    user.setTfly(0);
+                }
             }
         }
 
@@ -118,8 +125,10 @@ public class PvPManager {
             if (AntiRelog.CMI_HOOK == true) {
                 CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
-                CMI.getInstance().getNMS().changeGodMode(player, false);
-                user.setTgod(0);
+                if (user != null) {
+                    CMI.getInstance().getNMS().changeGodMode(player, false);
+                    user.setTgod(0);
+                }
             }
             if (AntiRelog.ESSENTIALS_HOOK == true) {
                 Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
@@ -140,7 +149,8 @@ public class PvPManager {
     }
 
     private static void update() {
-        if (pvpMap == null) return;
+        if (pvpMap == null)
+            return;
 
         Iterator<Map.Entry<String, Integer>> iterator = pvpMap.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -152,7 +162,8 @@ public class PvPManager {
                 iterator.remove();
                 Player player = Bukkit.getPlayer(name);
                 if (player != null) {
-                    player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.end")));
+                    player.sendMessage(
+                            ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.end")));
                     sendCommands(false, player);
                 }
             } else {
