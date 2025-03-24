@@ -27,5 +27,4 @@ public class CooldownData {
     public void setItem(String item) {
         this.item = item;
     }
-
 }

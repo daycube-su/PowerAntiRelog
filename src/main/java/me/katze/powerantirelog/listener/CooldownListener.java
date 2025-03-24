@@ -12,6 +12,7 @@ import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityResurrectEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -20,6 +21,51 @@ import java.time.Duration;
 import java.time.LocalTime;
 
 public class CooldownListener implements Listener {
+
+    @EventHandler
+    public void onCrossbowUse(EntityShootBowEvent event) {
+        if (event.getEntity() instanceof org.bukkit.entity.Player) {
+            if (event.getBow() == null) {
+                return;
+            }
+
+            if (event.getBow().getType() == org.bukkit.Material.CROSSBOW) {
+                Player player = (Player) event.getEntity();
+                ItemStack itemStack = event.getBow();
+
+                if (!PvPManager.isPvP(player)) return;
+
+                CooldownData data = CooldownManager.getPlayer(player);
+
+                int configTime = AntiRelog.getInstance().getConfig().getInt("settings.cooldown.trident");
+
+                if (data != null) {
+                    if (configTime <= 0) return;
+
+                    LocalTime now = LocalTime.now();
+                    LocalTime cooldown = data.getTime();
+
+                    Duration timePassed = Duration.between(cooldown, now);
+                    long secondsPassed = timePassed.getSeconds();
+                    long remainingTime = configTime - secondsPassed;
+
+                    if (secondsPassed >= configTime) {
+                        CooldownManager.removePlayer(player);
+                    } else {
+                        player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.cooldown").replace("{time}", String.valueOf(remainingTime))));
+                        if (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != null ||
+                                (AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle") != "")) {
+                            player.sendTitle("", AntiRelog.getInstance().getConfig().getString("messages.cooldown-subtitle").replace("{time}", String.valueOf(remainingTime)), 6, 40, 6);
+                        }
+                        event.setCancelled(true);
+                    }
+
+                } else {
+                    CooldownManager.addPlayer(player, itemStack);
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void onTridentThrow(ProjectileLaunchEvent event) {

@@ -47,6 +47,7 @@ settings:
     firework: 0
     totem: 0
     trident: 0
+    crossbow: 0
 
   # Работает только если cancel.command ровно true
   command-whitelist:
