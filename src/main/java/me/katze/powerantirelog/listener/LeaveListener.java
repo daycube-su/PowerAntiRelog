@@ -11,14 +11,20 @@ public class LeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onQuit(PlayerQuitEvent e) {
-        if (!PvPManager.isPvP(e.getPlayer())) return;
+        if (!PvPManager.isPvP(e.getPlayer())) {
+            PvPManager.removeFromMaps(e.getPlayer());
+            return;
+        }
 
         PvPManager.leave(e.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onKick(PlayerKickEvent e) {
-        if (!PvPManager.isPvP(e.getPlayer())) return;
+        if (!PvPManager.isPvP(e.getPlayer())) {
+            PvPManager.removeFromMaps(e.getPlayer());
+            return;
+        }
 
         PvPManager.leave(e.getPlayer());
     }

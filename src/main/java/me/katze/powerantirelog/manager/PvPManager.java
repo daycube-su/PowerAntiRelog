@@ -56,11 +56,18 @@ public class PvPManager {
         if (pvpMap.containsKey(name)) {
             pvpMap.replace(name, pvpMap.get(name), time);
         } else {
-            player.sendMessage(StringUtility.getMessage(AntiRelog.getInstance().getConfig().getString("messages.start")));
+            player.sendMessage(
+                    StringUtility.getMessage(AntiRelog.getInstance().getConfig().getString("messages.start")));
             sendCommands(true, player);
             disable(player);
             pvpMap.put(name, time);
         }
+    }
+
+    public static void removeFromMaps(Player player) {
+        pvpMap.remove(player.getName());
+
+        CooldownManager.removePlayer(player);
     }
 
     public static boolean isPvP(Player player) {
@@ -83,7 +90,7 @@ public class PvPManager {
             Bukkit.getServer().broadcastMessage(replacedString);
         }
 
-        pvpMap.remove(player.getName());
+        removeFromMaps(player);
     }
 
     private static void disable(Player player) {
