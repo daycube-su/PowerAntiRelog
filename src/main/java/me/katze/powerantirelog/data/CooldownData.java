@@ -1,15 +1,14 @@
 package me.katze.powerantirelog.data;
 
-
 import java.time.LocalTime;
 
 public class CooldownData {
     private LocalTime time;
-    private String item;
+    private String materialName;
 
-    public CooldownData(LocalTime time, String item) {
+    public CooldownData(LocalTime time, String materialName) {
         this.time = time;
-        this.item = item;
+        this.materialName = materialName;
     }
 
     public LocalTime getTime() {
@@ -21,10 +20,6 @@ public class CooldownData {
     }
 
     public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
+        return materialName;
     }
 }

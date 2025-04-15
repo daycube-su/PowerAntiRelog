@@ -1,7 +1,7 @@
 package me.katze.powerantirelog.listener;
 
 import me.katze.powerantirelog.manager.PvPManager;
-import me.katze.powerantirelog.utility.DamagerUtility;
+import me.katze.powerantirelog.utility.PlayerUtility;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +20,7 @@ public class DamageListener implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
 
         Player target = (Player) e.getEntity();
-        Player damager = DamagerUtility.getDamager(e.getDamager());
+        Player damager = PlayerUtility.getDamager(e.getDamager());
 
         if (damager == null) return;
         if (damager == target) return;

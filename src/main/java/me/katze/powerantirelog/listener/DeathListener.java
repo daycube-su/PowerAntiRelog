@@ -9,10 +9,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class DeathListener implements Listener {
 
     @EventHandler
-    public void on(PlayerDeathEvent e) {
+    public void onDeath(PlayerDeathEvent e) {
         Player player = e.getEntity().getPlayer();
 
-        if (!PvPManager.isPvP(player)) return;
+        if (!PvPManager.isPvP(player))
+            return;
 
         PvPManager.death(player);
     }

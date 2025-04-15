@@ -5,11 +5,11 @@ import org.bukkit.ChatColor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ColorUtility {
+public class StringUtility {
     private static final Pattern HEX_PATTERN = Pattern.compile("&#([A-Fa-f0-9]{6})");
 
-    public static String getMsg(String str) {
-        String translated = ChatColor.translateAlternateColorCodes('&', str);
+    public static String getMessage(String string) {
+        String translated = ChatColor.translateAlternateColorCodes('&', string);
 
         Matcher matcher = HEX_PATTERN.matcher(translated);
         StringBuffer buffer = new StringBuffer();

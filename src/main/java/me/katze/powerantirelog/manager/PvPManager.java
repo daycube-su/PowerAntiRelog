@@ -5,8 +5,9 @@ import com.Zrips.CMI.Containers.CMIUser;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.katze.powerantirelog.AntiRelog;
+import me.katze.powerantirelog.data.CooldownData;
 import me.katze.powerantirelog.utility.BossBarUtility;
-import me.katze.powerantirelog.utility.ColorUtility;
+import me.katze.powerantirelog.utility.StringUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -55,7 +56,7 @@ public class PvPManager {
         if (pvpMap.containsKey(name)) {
             pvpMap.replace(name, pvpMap.get(name), time);
         } else {
-            player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.start")));
+            player.sendMessage(StringUtility.getMessage(AntiRelog.getInstance().getConfig().getString("messages.start")));
             sendCommands(true, player);
             disable(player);
             pvpMap.put(name, time);
@@ -78,7 +79,7 @@ public class PvPManager {
         }
 
         for (String string : AntiRelog.getInstance().getConfig().getStringList("settings.leave.message")) {
-            String replacedString = ColorUtility.getMsg(string).replace("{player}", player.getName());
+            String replacedString = StringUtility.getMessage(string).replace("{player}", player.getName());
             Bukkit.getServer().broadcastMessage(replacedString);
         }
 
@@ -89,13 +90,13 @@ public class PvPManager {
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.fly")) {
             player.setFlying(false);
             player.setAllowFlight(false);
-            if (AntiRelog.CMI_HOOK == true) {
+            if (AntiRelog.getInstance().CMI_HOOK) {
                 CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
                 if (user != null) {
                     user.setFlying(false);
                     user.setWasFlying(false);
-                    user.setTfly(0);
+                    user.setTfly(0L);
                 }
             }
         }
@@ -122,15 +123,15 @@ public class PvPManager {
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.godmode")) {
-            if (AntiRelog.CMI_HOOK == true) {
+            if (AntiRelog.getInstance().CMI_HOOK) {
                 CMIUser user = CMI.getInstance().getPlayerManager().getUser(player);
 
                 if (user != null) {
                     CMI.getInstance().getNMS().changeGodMode(player, false);
-                    user.setTgod(0);
+                    user.setTgod(0L);
                 }
             }
-            if (AntiRelog.ESSENTIALS_HOOK == true) {
+            if (AntiRelog.getInstance().ESSENTIALS_HOOK) {
                 Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
                 User user = essentials.getUser(player);
 
@@ -163,12 +164,12 @@ public class PvPManager {
                 Player player = Bukkit.getPlayer(name);
                 if (player != null) {
                     player.sendMessage(
-                            ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.end")));
+                            StringUtility.getMessage(AntiRelog.getInstance().getConfig().getString("messages.end")));
                     sendCommands(false, player);
                 }
             } else {
                 pvpMap.replace(name, time);
-                BossBarUtility.set(name, time);
+                BossBarUtility.setTemporarily(name, time);
             }
         }
     }
@@ -179,11 +180,13 @@ public class PvPManager {
         if (pvpMap.containsKey(name)) {
             pvpMap.remove(name);
         }
+
+        CooldownManager.removePlayer(player);
     }
 
     private static void sendCommands(boolean start, Player player) {
         List<String> commands;
-        if (start == true) {
+        if (start) {
             commands = AntiRelog.getInstance().getConfig().getStringList("settings.command-start");
         } else {
             commands = AntiRelog.getInstance().getConfig().getStringList("settings.command-end");

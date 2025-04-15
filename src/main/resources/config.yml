@@ -34,8 +34,6 @@ settings:
     interact: true
     command: true
     teleport: true
-    chorus: false
-    ender-pearl: false
     ender-chest: true
 
   # Установите 0, чтобы отключить задержки
@@ -86,5 +84,3 @@ messages:
   reload: "§x§E§3§2§6§3§6&l| &aКонфигурация плагина была успешно перезагружена!"
   test: "§x§E§3§2§6§3§6&l| &fВы выдали игроку §x§E§3§2§6§3§6{player} &fрежим PvP."
   not-found: "§x§E§3§2§6§3§6&l| &cИгрок {player} не найден."
-
-

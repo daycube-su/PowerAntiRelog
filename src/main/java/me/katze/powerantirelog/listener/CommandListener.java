@@ -2,7 +2,7 @@ package me.katze.powerantirelog.listener;
 
 import me.katze.powerantirelog.AntiRelog;
 import me.katze.powerantirelog.manager.PvPManager;
-import me.katze.powerantirelog.utility.ColorUtility;
+import me.katze.powerantirelog.utility.StringUtility;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,7 +25,7 @@ public class CommandListener implements Listener {
         }
 
         e.setCancelled(true);
-        player.sendMessage(ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("messages.block")));
+        player.sendMessage(StringUtility.getMessage(AntiRelog.getInstance().getConfig().getString("messages.block")));
     }
 
     private static boolean isWhitelistCommand(String command) {

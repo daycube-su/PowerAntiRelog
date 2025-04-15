@@ -9,30 +9,26 @@ import me.katze.powerantirelog.manager.CooldownManager;
 import me.katze.powerantirelog.manager.PvPManager;
 import me.katze.powerantirelog.utility.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AntiRelog extends JavaPlugin {
 
-    public static boolean CMI_HOOK = false;
-    public static boolean ESSENTIALS_HOOK = false;
-    public static boolean WORLDGUARD_HOOK = false;
+    public boolean CMI_HOOK = false;
+    public boolean ESSENTIALS_HOOK = false;
+    public boolean WORLDGUARD_HOOK = false;
 
-    private static final int PLUGIN_ID = 23642;
-    public static final String VERSION = "1.0-RELEASE";
-    public static final String CREATOR = "https://github.com/katze225/PowerAntiRelog";
-    public static final String TELEGRAM_URL = "https://t.me/apaathy3";
+    private final int PLUGIN_ID = 23642;
+    public final String VERSION = "1.6";
+    public final String CREATOR = "https://github.com/katze225/PowerAntiRelog";
+    public final String TELEGRAM_URL = "https://t.me/core2k21";
 
     private static AntiRelog instance;
-    private FileConfiguration config;
-
     public PvPManager pvpmanager;
     public CooldownManager cooldownManager;
 
     @Override
     public void onEnable() {
         instance = this;
-        config = getConfig();
 
         System.out.println("Version: " + CREATOR);
         System.out.println("By: " + VERSION);
@@ -50,7 +46,8 @@ public final class AntiRelog extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+    }
 
     private void loadCommands() {
         PaperCommandManager commandManager = new PaperCommandManager(AntiRelog.getInstance());
@@ -65,7 +62,6 @@ public final class AntiRelog extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new LeaveListener(), this);
-        Bukkit.getPluginManager().registerEvents(new TeleportListener(), this);
         Bukkit.getPluginManager().registerEvents(new InteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
         Bukkit.getPluginManager().registerEvents(new CooldownListener(), this);

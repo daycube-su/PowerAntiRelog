@@ -12,7 +12,7 @@ public class WorldGuardListener implements Listener {
 
     @EventHandler
     public void onPvP(WrappedDisallowedPVPEvent e) {
-        if (AntiRelog.WORLDGUARD_HOOK != true) return;
+        if (!AntiRelog.getInstance().WORLDGUARD_HOOK) return;
 
         Player attacker = e.getAttacker();
         Player defender = e.getDefender();

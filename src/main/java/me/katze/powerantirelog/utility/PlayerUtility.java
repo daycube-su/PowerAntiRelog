@@ -2,7 +2,7 @@ package me.katze.powerantirelog.utility;
 
 import org.bukkit.entity.*;
 
-public class DamagerUtility {
+public class PlayerUtility {
 
     public static Player getDamager(Entity damager) {
         if (damager instanceof Player) {

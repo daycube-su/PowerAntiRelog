@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class BossBarUtility {
 
-    public static void set(String playerName, int time) {
+    public static void setTemporarily(String playerName, int time) {
         Player player = Bukkit.getPlayer(playerName);
 
         if (player == null) return;
@@ -17,7 +17,7 @@ public class BossBarUtility {
         int maxTime = AntiRelog.getInstance().getConfig().getInt("settings.time");
 
         BossBar bossBar = Bukkit.createBossBar(
-                ColorUtility.getMsg(AntiRelog.getInstance().getConfig().getString("settings.bossbar.bar")
+                StringUtility.getMessage(AntiRelog.getInstance().getConfig().getString("settings.bossbar.bar")
                         .replace("{time}", String.valueOf(time))),
                 BarColor.valueOf(AntiRelog.getInstance().getConfig().getString("settings.bossbar.color")),
                 BarStyle.valueOf(AntiRelog.getInstance().getConfig().getString("settings.bossbar.style"))
