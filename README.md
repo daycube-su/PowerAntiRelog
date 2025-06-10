@@ -1,9 +1,5 @@
 ## 🛡️ PowerAntiRelog
-### Features
-
-- Easy to use
-- High performance
-- Best protection
+The plugin adds a battle mode to your server. During which if a player leaves the server all his resources are on the ground. This plugin solves the problem of PvP and makes it fair
 
 ### Usage
 `Add the .jar file to the plugins folder and start your server.`
