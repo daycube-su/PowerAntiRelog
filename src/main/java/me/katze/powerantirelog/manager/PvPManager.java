@@ -121,12 +121,12 @@ public class PvPManager {
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.elytra")
-                && player.getInventory().getChestplate() != null) {
-            if (player.getInventory().getChestplate().getType() == Material.ELYTRA) {
-                ItemStack itemStack = player.getInventory().getChestplate();
-                player.getInventory().getChestplate().setType(null);
-                player.getInventory().addItem(itemStack);
-            }
+                && player.getInventory().getChestplate() != null
+                && player.getInventory().getChestplate().getType() == Material.ELYTRA) {
+
+            ItemStack elytra = player.getInventory().getChestplate().clone();
+            player.getInventory().setChestplate(null);
+            player.getInventory().addItem(elytra);
         }
 
         if (AntiRelog.getInstance().getConfig().getBoolean("settings.disable.godmode")) {
