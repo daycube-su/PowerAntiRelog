@@ -1,7 +1,9 @@
 package me.katze.powerantirelog.listener;
 
+import me.katze.powerantirelog.event.PlayerEnterPvPEvent;
 import me.katze.powerantirelog.manager.PvPManager;
 import me.katze.powerantirelog.utility.PlayerUtility;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +17,18 @@ import org.bukkit.potion.PotionEffectType;
 
 public class DamageListener implements Listener {
 
+    private void triggerPvPEvent(Player player1, Player player2) {
+        if (player1 == null || player2 == null || player1 == player2) return;
+
+        PlayerEnterPvPEvent event = new PlayerEnterPvPEvent(player1, player2);
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (!event.isCancelled()) {
+            PvPManager.addPlayer(player1);
+            PvPManager.addPlayer(player2);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamageByEntity(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
@@ -22,26 +36,18 @@ public class DamageListener implements Listener {
         Player target = (Player) e.getEntity();
         Player damager = PlayerUtility.getDamager(e.getDamager());
 
-        if (damager == null) return;
-        if (damager == target) return;
-
-        PvPManager.addPlayer(target);
-        PvPManager.addPlayer(damager);
+        triggerPvPEvent(damager, target);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCombust(EntityCombustByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
+        if (!(e.getCombuster() instanceof Player)) return;
 
         Player target = (Player) e.getEntity();
-
-        if (!(e.getCombuster() instanceof Player)) return;
         Player damager = (Player) e.getCombuster();
 
-        if (damager == target) return;
-
-        PvPManager.addPlayer(target);
-        PvPManager.addPlayer(damager);
+        triggerPvPEvent(damager, target);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -52,13 +58,12 @@ public class DamageListener implements Listener {
         Player damager = (Player) e.getPotion().getShooter();
 
         for (LivingEntity target : e.getAffectedEntities()) {
-            if (target == damager) return;
-
-            for (PotionEffect effect : e.getPotion().getEffects()) {
-                if (effect.getType().equals(PotionEffectType.POISON)) {
-
-                    PvPManager.addPlayer(damager);
-                    PvPManager.addPlayer((Player) target);
+            if (target instanceof Player && target != damager) {
+                for (PotionEffect effect : e.getPotion().getEffects()) {
+                    if (effect.getType().equals(PotionEffectType.POISON)) {
+                        triggerPvPEvent(damager, (Player) target);
+                        break;
+                    }
                 }
             }
         }
