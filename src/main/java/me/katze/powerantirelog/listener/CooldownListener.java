@@ -119,6 +119,15 @@ public class CooldownListener implements Listener {
 
         CooldownData data = CooldownManager.getCooldownData(player, material);
         int configTime = getCooldownTime(material);
+
+        if (configTime == -1) {
+            String message = AntiRelog.getInstance().getConfig().getString("messages.block");
+            if (message != null) {
+                player.sendMessage(StringUtility.getMessage(message));
+            }
+            return true;
+        }
+
         if (configTime <= 0)
             return false;
 
