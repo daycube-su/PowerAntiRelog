@@ -30,12 +30,12 @@ public final class AntiRelog extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        System.out.println("Version: " + CREATOR);
-        System.out.println("By: " + VERSION);
-        System.out.println("Support: " + TELEGRAM_URL);
+        //System.out.println("Version: " + CREATOR);
+        //System.out.println("By: " + VERSION);
+        //System.out.println("Support: " + TELEGRAM_URL);
 
         loadDepend();
-        loadMetrics();
+        //loadMetrics();
         loadConfig();
 
         loadListeners();
